@@ -12,19 +12,21 @@
 
 # Introduction to Assembly
 
-## Foreword
-
-This essay is based on an windows machine and the windows subsystem for linux with ubuntu as my distro of choice and an intel x86_64 processor, some things may need to change for your machine in order to make everything work, in that case search about your processor beforehand to trying coding with Assembly.   
-
 In this README we will discuss about the Assembly Programming Language, namely the x86_64 or i386 Architecture, on how to read it, understand it and how to utilize it alongside almost anything. Since Assembly is the lowest level language before the actual machine code (i.e Binary), we need to understand: How does the Computer understand Assembly?
 
-WHy need tools? -->
+## Foreword
 
-I will be specially using NASM (- the Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining functions and what nots, since that is what I have, as for the Linker we will be using LD - The GNU linker, this one comes with every linux distribuiton as far as I know. 
+This essay is based on an windows machine and the windows subsystem for linux with ubuntu as my distro of choice and an intel x86_64 processor, some things may need to change for your machine in order to make everything work, in that case search about your processor beforehand to trying coding with Assembly.
 
-The purpose of an assembler is to get your .s files and change them to .o files that the linker will receive, this tool is part of the compiler toolchain but since we will write everything in asm we have little use for gcc. The Linker is also part of our toolchain, LD in this case will grab the .o files assembled and link them into usable binary to the OS, forming an output file (i.e. a.out), for us to execute our code.
+In order to Code in ASM however, we can not use the normal C compiler for this job and therefore, need tools to do so, but what do we use?
 
-Alongside NASM we will need the Intel Manual (for alternative sources look up [felixcloutier.com/x86/](https://www.felixcloutier.com/x86/)) for the x86 assembly instructions and operations, NASM will impact written syntax so choose assemblers based on what you have, in windows for example we have MASM, in Linux we have GNAS as GNU Assembler and for an selfhosted assembler you can use FASM and its website for more information [flat assembler](https://flatassembler.net/).
+In this paper I will be specially using the NASM (Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining whatever isnt operations, NASM will impact written syntax, so choose a assembler based on what you currently have when coding, for Windows we can use MASM, for Linux we can use the GNAS (GNU Assembler) and for an selfhosted assembler you can use and read about FASM in its website [flat assembler](https://flatassembler.net/). As for the Linker, LD (The GNU linker) will be utilized, this linker should come with every distribution of the GNU Compilers Colections as far as I know. 
+
+To further understand the use of this tools check the section below.
+
+Alongside NASM we will need the Intel Manual [found here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) for the x86_64 assembly instructions and operations. As previously explained, the Assembler will impact the syntax used to write our code, but in order to perform operations we will need the construction set made by the Fabricator of our CPU (Intel in this case), its here that we can learn what the cpu can and cannot do.
+
+(for alternative sources of the i386 architecture, look up [felixcloutier.com/x86/](https://www.felixcloutier.com/x86/))
 
 Alongside the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be used, so choose what will be easier or more comfortable for you.
 
