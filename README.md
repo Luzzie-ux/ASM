@@ -3,34 +3,57 @@
 ## Table of Contents
 
 1. [Introduction to Assembly](#introduction-to-assembly)
-	1. [How does it do it?](#how-does-it-do-it)
-	2. [The Computer](#the-computer)
+	1. [Foreword](#foreword)
+	2. [How does it do it?](#how-does-it-do-it)
+	3. [The Computer](#the-computer)
 		1. [Components](#besides-the-cpu-what-elses-composes-our-machine)
-		2. [Tools](#tools)
-		3. [Binary](#binary)
+		2. [Binary](#binary)
 2. 
 
 # Introduction to Assembly
 
-Foreword: This essay is based of an windows machine and the windows subsystem for linux with ubuntu as my distro of choice and an intel x86_64 processor, some things may need to change for your machine in order to make everything work, in that case search about your processor beforehand to trying coding with Assembly.   
+## Foreword
 
-In this README we will discuss about the Assembly Programming Language, namely the x86_64 or i386 Architecture, on how to read it, understand it and how to utilize it alongside almost anything. Since Assembly is the lowest level language before the actual machine code (i.e Binary), we need to understand what a piece of assembly codes does to the computer or to make it more simplier: How does the Computer understand Assembly?
+This essay is based on an windows machine and the windows subsystem for linux with ubuntu as my distro of choice and an intel x86_64 processor, some things may need to change for your machine in order to make everything work, in that case search about your processor beforehand to trying coding with Assembly.   
+
+In this README we will discuss about the Assembly Programming Language, namely the x86_64 or i386 Architecture, on how to read it, understand it and how to utilize it alongside almost anything. Since Assembly is the lowest level language before the actual machine code (i.e Binary), we need to understand: How does the Computer understand Assembly?
+
+WHy need tools? -->
+
+I will be specially using NASM (- the Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining functions and what nots, since that is what I have, as for the Linker we will be using LD - The GNU linker, this one comes with every linux distribuiton as far as I know. 
+
+The purpose of an assembler is to get your .s files and change them to .o files that the linker will receive, this tool is part of the compiler toolchain but since we will write everything in asm we have little use for gcc. The Linker is also part of our toolchain, LD in this case will grab the .o files assembled and link them into usable binary to the OS, forming an output file (i.e. a.out), for us to execute our code.
+
+Alongside NASM we will need the Intel Manual (for alternative sources look up [felixcloutier.com/x86/](https://www.felixcloutier.com/x86/)) for the x86 assembly instructions and operations, NASM will impact written syntax so choose assemblers based on what you have, in windows for example we have MASM, in Linux we have GNAS as GNU Assembler and for an selfhosted assembler you can use FASM and its website for more information [flat assembler](https://flatassembler.net/).
+
+Alongside the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be used, so choose what will be easier or more comfortable for you.
 
 ## How does it do it?
 
-When we write a simple program in C or Python to print to stdout, for example, "Hello World", we usually only need to think about the size of the string (in C at least) or what function to call (in this case Python's print()), but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
+When we write a simple program in C or Python to print to stdout, for example, the standard "Hello World", we usually only need to think about the size of the string (in C at least) or what function to call (in this case Python's print()), but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
 
-To put it bluntly, the compiler doesnt care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC for example will call a tool chain to first read through everything and check for substancial errors like a forgotten semicolon. Then a parser to find possible optimazitions and lexicon to see if what was wrote follows the rules of the language in use, then the compiler that will write what you need in our topic of discussing, ASM, to then assemble it and link it to the libraries we call and other files we use.
+To put it bluntly, the compiler doesnt care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC for example will call a tool chain:
 
-Most if not all the time the compiler will write a better asm code than us since it was build to do exactly that, but it doesnt mean we cant learn it to use in alongside our code, or to better understand why the compiler chose to do something in a certain way that our code definitely does not.
+| Tool Chain  |     Phases               |   descriptions    |
+|-------------|--------------------------|-------------------|
+|Pre-processor| Lexer - Lexical analysis | The compiler will read the source code, grouping every character into tokens|
+| P   ->      | Parser - Syntax analysis | After the lexer, the parser will take the tokens as inputs and will verify the gramatical struct of the code and its syntax, building a parse tree to pass along|
+| P   ->      |        Semantic analysis | This pase will verify type correctness and ensure proper declaration and scope of identifiers, forming an Annotated Syntax Tree to pass further|
+| Compiler    |             Optimization | Here the compiler will take from the AST, verifing what can be optimazed out and what can be further specialized|
+| C   ->      |          Code generation | From what the optimization gives us, a Assembly code will be generated here|
+| Assembling  |                Assembler | With the assembly code in hands, the AS will assemble the .s into .o files, passing them into binary|
+| Linking     |                   Linker | Last the LD will take the .o given to it from the AS and form a static library that will be them passed to the executable|
 
-Now what is missing is the answer to the question, "how does it do it?", well its very simple actually, Assembly can be seen as more of an actual instruction set than anything else, it is the native way we can access the core of a machine and give it direct orders. ASM then can be put as our computer manual having two distinct language translations, one to humans and the other to the machine (Binary). And when called, the cpu will follow through.
 
-To better understand why 0's and 1's are important to us, we need to understand more about what a computer is and how is it build. 
+Most if not all the time the compiler will write a better asm code than us because it was built to do exactly that. It doesnt mean we cant learn how to use alongside our code. Its in fact important to understand how does the compile do its job because we will be doing it, besides assembling and linking, from the Pre-Processing to Code Generation, that will be out Job now. 
+
+Now what is missing is the answer to the question, "How does It do it?". Assembly itself cant be read by the computer and so with the help of an Assembler we can transform whatever we give then into binary. This Language should be interpreted as an instruction set than anything else, it is the native way we can access the core of a machine and give it direct orders. Metaphoricaly ASM is to humans what Binary is to computers, an Speaking Language.
+
+Lets now dive into what is a Computer and how does a Computer behaves when it has to run.
 
 ## The computer
 
-Depending on the manufacturer that built the computer parts, we will need to use a different set of instructions to build our code and different tools to make it work, for example, there is no universal assembly code or any general way to build something in assembly solely because of the way our CPU is built, every CPU comes with its own set of instructions, rules and orders to follow before it does anything special and that dictates our we build things too.
+Depending on the manufacturer that built the computer parts, we will need to use a different way to build our code and different tools to make it work, for example, there is no universal assembly code or any general way to create something in assembly solely because of the way our CPU is built, with its own set of instructions, rules and orders to follow before it does anything special.
 
 ### Besides the CPU what elses composes our machine?
 
@@ -85,15 +108,7 @@ The output unit consists of output devices that are attached to the computer. It
 	The output unit is formed by attaching the output devices of a computer.
 	The output unit accepts the information from the CPU and displays it in a user-readable form.
 
-### Tools
 
-With the CPU alone we cant do anything though, that is why we need an Assembler and Linker too. 
-
-I will be specially using NASM - the Netwide Assembler, a portable 80x86 assembler and it's instruction set when explaining things since that is what I have available to me, as for the Linker I will be using LD - The GNU linker, this one comes with every linux distribuiton as far as I know. 
-
-The purpose of an assembler is to get your .s or .asm files and transform them to objs files that the linker will receive, this tool is part of the compiler toolchain but since we will write everything in asm we have little use for gcc. The Linker is also part of our toolchain, LD in this case will grab the .o files assembled and link them into usable binary to the OS, forming an output file (i.e. a.out), for us to execute our code.
-
-Alongside NASM we will need the Intel Manual (for alternative sources look up [felixcloutier.com/x86/](https://www.felixcloutier.com/x86/)) for the x86 assembly instructions and operations, NASM will impact written syntax so choose assemblers based on what you have, in windows for example we have MASM and for an selfhosted assembler you can use FASM and its website for more information [flat assembler](https://flatassembler.net/). With the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be using as far as I know to code in asm, so choose any that will be easier or more comfortable for you.
 
 ### Binary
 
@@ -104,11 +119,11 @@ Long before we had terminals, keyboards, and GUIs, we had a machine (in its lite
 	Zero for false.
 	One for true.
 
-Most computers at that time used 8-bits 8 or binary digits, meaning it representend letters, digits or characters only needed 255 combinations of a 8-bit length word to do so, with the American Standard Code for Information Interchange - ASCII, we defined numeric values for each character needed for anything. But of course it doesnt stop there, writing everything in binary is tiresomea and one wrong 1 can set off many errors, so we came up with the hexadecimal format. 
+Most computers at that time used a variaty of bits (binary digits) to perform operations, but with the intel8080 the 8-bit format became more standardize. Bits are to machines letters, digits or characters, being able to perform 255 combinations of a 8-bit length word to do so, with the American Standard Code for Information Interchange - ASCII, we defined numeric values for each character needed for anything. But of course it doesnt stop there, writing everything in binary is tiresome and one 0 in the wrong place can create many errors, so IBM came up with the hexadecimal format. 
 
 To make binary values readable, we had to find a way to set them right, so let's make a table:
 
-To know how much a bit is worth we say that the highest one would be 8 and the Least 1
+To know how much a bit is worth we say that the Highest value one would be 8 and the Least Valuable one 1
 
 |8|7|6|5|4|3|2|1|
 |-|-|-|-|-|-|-|-|
@@ -116,10 +131,12 @@ To know how much a bit is worth we say that the highest one would be 8 and the L
 
 and each bit has a arbitarily given value (2^n)
 
-|2⁸ |2⁷ |2⁶|2⁵|2⁴|2³|2²|2¹|2⁰|
-|---|---|--|--|--|--|--|--|--|
-|256|128|64|32|16|08|04|02|01|
-| 0 | 0 |0 |0 |0 |0 |0 |0 |0 |
+|2⁷ |2⁶|2⁵|2⁴|2³|2²|2¹|2⁰|
+|---|--|--|--|--|--|--|--|
+|128|64|32|16|08|04|02|01|
+| 0 |0 |0 |0 |0 |0 |0 |0 |
+
+(With the growth of bit sizes from 8 to 16 and 16 to 32 and 32 to 64, the HVB (Highest valuable bit) keeps increasing, but that doesnt mean we stopped using lower formats, check [ registers](#registers) to better understand.)
 
 The hexadecimal format takes from this to define how a digit will be written because of how many combinations from 0000 to 1111 we can make:
 
