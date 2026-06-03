@@ -4,8 +4,8 @@
 
 1. [Introduction to Assembly](#introduction-to-assembly)
 	1. [Foreword](#foreword)
-	2. [Compiler tool chain](#compiler-tool-chain)
-	3. [The Computer](#the-computer)
+	2. [The Computer](#the-computer)
+	3. [Components](#components)
 		1. [Input Unit](#1---input-unit)
 		2. [Central Processing Unit](#2---central-processing-unit)
 		3. [Output Unit](#3---output-unit)
@@ -22,44 +22,44 @@ This essay is based on an windows machine and the windows subsystem for linux wi
 
 In order to Code in ASM however, we can not use the normal C compiler for this job and therefore, need tools to do so, but what do we use?
 
-In this paper I will be specially using the NASM (Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining whatever isnt operations, NASM will impact written syntax, so choose a assembler based on what you currently have when coding, for Windows we can use MASM, for Linux we can use the GAS (GNU Assembler) and for an selfhosted assembler you can use and read about FASM in its website [flat assembler](https://flatassembler.net/). As for the Linker, LD (The GNU linker) will be utilized, this linker should come with every distribution of the GNU Compilers Colections as far as I know. 
+In this paper I will be specially using the NASM (Netwide Assembler, a portable 80x86 assembler) and its instruction set when explaining whatever isn't operations, NASM will impact written syntax, so choose an assembler based on what you currently have when coding, for Windows we can use MASM, for Linux we can use the GAS (GNU Assembler) and for a self-hosted assembler you can use and read about FASM in its website [flat assembler](https://flatassembler.net/). As for the Linker, LD (The GNU linker) will be utilized, this linker should come with every distribution of the GNU Binary utilities as far as I know. 
 
 To further understand the use of this tools check the section below.
 
-Alongside NASM we will need the Intel Manual [found here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) for the x86_64 assembly instructions and operations. As previously explained, the Assembler will impact the syntax used to write our code, but in order to perform operations we will need the construction set made by the Fabricator of our CPU (Intel in this case), its here that we can learn what the cpu can and cannot do.
+Alongside NASM we will need the Intel Manual [found here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) for the x86_64 assembly instructions and operations. As previously explained, the Assembler will impact the syntax used to write our code, but in order to perform operations we will need the construction set made by the Fabricator of our CPU (Intel in this case), it's here that we can learn what the cpu can and cannot do.
 
 (for alternative sources of the i386 architecture, look up [felixcloutier.com/x86/](https://www.felixcloutier.com/x86/))
 
 Alongside the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be used, so choose what will be easier or more comfortable for you.
 
-## Compiler Tool Chain
+## The computer 
 
 When we write a simple program in C or Python to print to stdout, for example, the standard "Hello World", we usually only need to think about the size of the string (in C at least) or what function to call (in this case Python's print()), but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
 
-To put it bluntly, the compiler doesnt care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC will call its tool chain:
+To put it bluntly, the compiler doesn't care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC will call its tool chain:
 
 | Tool Chain  |     Phases               |   descriptions    |
 |-------------|--------------------------|-------------------|
 |Pre-processor| Lexer - Lexical analysis | The compiler will read the source code, grouping every character into tokens|
-| P   ->      | Parser - Syntax analysis | After the lexer, the parser will take the tokens as inputs and will verify the gramatical struct of the code and its syntax, building a parse tree to pass along|
-| P   ->      |        Semantic analysis | This pase will verify type correctness and ensure proper declaration and scope of identifiers, forming an Annotated Syntax Tree to pass further|
-| Compiler    |             Optimization | Here the compiler will take from the AST, verifing what can be optimazed out and what can be further specialized|
-| C   ->      |          Code generation | From what the optimization gives us, a Assembly code will be generated here|
+| P   ->      | Parser - Syntax analysis | After the lexer, the parser will take the tokens as inputs and will verify the grammatical struct of the code and its syntax, building a parse tree to pass along|
+| P   ->      |        Semantic analysis | This phase will verify type correctness and ensure proper declaration and scope of identifiers, forming an Annotated Syntax Tree to pass further|
+| Compiler    |             Optimization | Here the compiler will take from the AST, verifying what can be optimized out and what can be further specialized|
+| C   ->      |          Code generation | From what the optimization gives us, an Assembly code will be generated here|
 | Assembling  |                Assembler | With the assembly code in hands, the AS will assemble the .s into .o files, passing them into binary|
-| Linking     |                   Linker | Last the LD will take the .o given to it from the AS and form a static library that will be them passed to the executable|
+| Linking     |                   Linker | Last the LD will take the .o given to it from the AS and form an ELF executable (or shared object)|
 
 
-Most if not all the time the compiler will write a better asm code than us because it was built to do exactly that. It doesnt mean we cant learn how to use alongside our code. Its in fact important to understand how does the compile do its job because we will be doing it, besides assembling and linking, from the Pre-Processing to Code Generation, that will be out Job now. 
+Most if not all the time the compiler will write a better asm code than us because it was built to do exactly that. It doesn't mean we can't learn how to use alongside our code. It's in fact important to understand how does the compiler do its job because we will be doing it, besides assembling and linking, from the Pre-Processing to Code Generation, that will be our Job now. 
 
-Now what is missing is the answer to the question, "How does It do it?". Assembly itself cant be read by the computer and so with the help of an Assembler we can transform whatever we give then into binary. This Language should be interpreted as an instruction set than anything else, it is the native way we can access the core of a machine and give it direct orders. Metaphoricaly ASM is to humans what Binary is to computers, an Speaking Language.
+Now what is missing is the answer to the question, "How does It do it?". Assembly itself can't be read by the computer and so with the help of NASM we can transform whatever we give it into binary. This Language should be interpreted as an instruction set than anything else, it is the native way we can access the core of a machine and give it direct orders. Metaphorically ASM is to humans what Binary is to computers, a dialect of some sorts.
 
-Lets now dive into what is a Computer and how does a Computer behaves when it has to run.
+Let's now dive into what is a Computer and how does a Computer behaves when it has to run.
 
-## The computer
+## Components
 
-Depending on the manufacturer that built the computer parts, we will need to use a different way to build our code and different tools to make it work, there is no universal method when creating any assembly code not in the uniqueness sense of the phrase but the but because how our CPU is built. Although the CPU may seem the most important part, it is only when working together with the other parts that we can use all of its potential.
+Depending on the manufacturer that built the computer parts, we will need to use a different way to build our code and different tools to make it work, there is no universal method when creating any assembly code not in the uniqueness sense of the phrase but because how our CPU is built. Although the CPU may seem the most important part, it is only when working together with the other parts that we can use all of the CPU's potential.
 
-[section from geeksforgeeks website](https://www.geeksforgeeks.org/computer-organization-architecture/computer-and-its-components/)
+The following overview of computer components is summarized from [geeksforgeeks - computer-and-its-components](https://www.geeksforgeeks.org/computer-organization-architecture/computer-and-its-components/). The indented points are quoted directly.
 
 ### 1 - Input Unit:
 
@@ -110,35 +110,33 @@ The output unit consists of output devices that are attached to the computer. It
 	The output unit is formed by attaching the output devices of a computer.
 	The output unit accepts the information from the CPU and displays it in a user-readable form.
 
-
-
 ### Binary
 
 Now with the tools in hand and the knowledge we need to know how the machine will understand what we pass to it, we can start learning assembly right? Not exactly. With asm most of if not everything is composed of manual memory management and how will our operations be translated to machine code, so we need first to know a little bit about why binary **is** machine language.
 
-Long before we had terminals, keyboards, and GUIs, we had a machine (in its literal definition) that receives instructions in a certain way that will output what we want from it. So we defined a basic model that could understand nuance and true or false conditions, the Binary. 0's and 1's are not just for mathematical operations but important to everything, with a simple yes and no we defined most if not what could a computer do and alongside logic gates (boolen logic) we have a very basic (but complex) computer.
+Long before we had terminals, keyboards, and GUIs, we had a machine (in its literal definition) that receives instructions in a certain way that will output what we want from it. So we defined a basic model that could understand nuance and true or false conditions, the Binary. 0's and 1's are not just for mathematical operations but important to everything, with a simple yes and no we defined most if not what could a computer do and alongside logic gates (boolean logic) we have a very basic (but complex) computer.
 
 	Zero for false.
 	One for true.
 
-Most computers at that time used a variaty of bits (binary digits) to perform operations, but with the intel8080 the 8-bit format became more standardize. Bits are to machines letters, digits or characters, being able to perform 255 combinations of a 8-bit length word to do so, with the American Standard Code for Information Interchange - ASCII, we defined numeric values for each character needed for anything. But of course it doesnt stop there, writing everything in binary is tiresome and one 0 in the wrong place can create many errors, so IBM came up with the hexadecimal format. 
+Most computers at that time used a variety of bits (binary digits) to perform operations, but with the intel8080 the 8-bit format became more standardized. Bits are to machines letters, digits or characters, being able to perform 256 combinations of an 8-bit length word to do so, with the American Standard Code for Information Interchange - ASCII, we defined numeric values for each character needed for anything. But of course it doesn't stop there, writing everything in binary is tedious and one 0 in the wrong place can create many errors, so IBM came up with the hexadecimal format. 
 
 To make binary values readable, we had to find a way to set them right, so let's make a table:
 
-To know how much a bit is worth we say that the Highest value one would be 8 and the Least Valuable one 1
+To know how much a bit is worth we say that the Highest value one would be eight position and the Least Valuable one the first position
 
 |8|7|6|5|4|3|2|1|
 |-|-|-|-|-|-|-|-|
 |0|0|0|0|0|0|0|0|
 
-and each bit has a arbitarily given value (2^n)
+and each bit has a arbitrarily given value too: (2^n)
 
 |2⁷ |2⁶|2⁵|2⁴|2³|2²|2¹|2⁰|
 |---|--|--|--|--|--|--|--|
 |128|64|32|16|08|04|02|01|
 | 0 |0 |0 |0 |0 |0 |0 |0 |
 
-(With the growth of bit sizes from 8 to 16 and 16 to 32 and 32 to 64, the HVB (Highest valuable bit) keeps increasing, but that doesnt mean we stopped using lower formats, check [ registers](#registers) to better understand.)
+(With the growth of bit sizes from 8 to 16 and 16 to 32 and 32 to 64, the Most Significant Bit (MSB) keeps increasing, but that doesn't mean we stopped using lower formats, check [registers](#registers) to better understand.)
 
 The hexadecimal format takes from this to define how a digit will be written because of how many combinations from 0000 to 1111 we can make:
 
@@ -161,4 +159,4 @@ The hexadecimal format takes from this to define how a digit will be written bec
 |1|1|1|0| -> E|
 |1|1|1|1| -> F|
 
-Now with hex defined, we can write almost anything in an 8 bit lenght, making use of only 4 bits to write one digit and 1 byte to write two. 
+Now with hex defined, we can write almost anything in an 8 bit length, making use of only 4 bits to write one digit and 1 byte to write two. 

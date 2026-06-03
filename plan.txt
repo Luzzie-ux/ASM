@@ -1,0 +1,16 @@
+Section 2 — The CPU & Registers would be the immediate next chapter:
+
+The general-purpose registers (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, r8–r15) and what each is conventionally used for
+
+How the same physical register has different names depending on the size you're accessing — so rax (64-bit), eax (32-bit), ax (16-bit), ah/al (8-bit high/low) are all the same register, just different views into it. This connects directly back to your bit-size table in Binary
+
+Special registers — the instruction pointer rip, the flags register rflags, and a brief mention of what flags are (zero, carry, sign, overflow) since they're essential for conditionals later
+
+The stack pointer rsp and base pointer rbp deserve a small callout since the stack will likely be its own section eventually
+
+After that, the natural progression would be:
+
+Memory & Addressing — how memory addresses work in x86_64, the difference between a value and a pointer, and how size directives (byte, word, dword, qword) connect back to the register sizes
+
+NASM Program Structure — sections (.text, .data, .bss), global labels, the entry point
+Your first program — a Hello World in ASM, tying everything together
