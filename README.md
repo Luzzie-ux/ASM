@@ -4,10 +4,12 @@
 
 1. [Introduction to Assembly](#introduction-to-assembly)
 	1. [Foreword](#foreword)
-	2. [How does it do it?](#how-does-it-do-it)
+	2. [Compiler tool chain](#compiler-tool-chain)
 	3. [The Computer](#the-computer)
-		1. [Components](#besides-the-cpu-what-elses-composes-our-machine)
-		2. [Binary](#binary)
+		1. [Input Unit](#1---input-unit)
+		2. [Central Processing Unit](#2---central-processing-unit)
+		3. [Output Unit](#3---output-unit)
+		4. [Binary](#binary)
 2. 
 
 # Introduction to Assembly
@@ -20,7 +22,7 @@ This essay is based on an windows machine and the windows subsystem for linux wi
 
 In order to Code in ASM however, we can not use the normal C compiler for this job and therefore, need tools to do so, but what do we use?
 
-In this paper I will be specially using the NASM (Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining whatever isnt operations, NASM will impact written syntax, so choose a assembler based on what you currently have when coding, for Windows we can use MASM, for Linux we can use the GNAS (GNU Assembler) and for an selfhosted assembler you can use and read about FASM in its website [flat assembler](https://flatassembler.net/). As for the Linker, LD (The GNU linker) will be utilized, this linker should come with every distribution of the GNU Compilers Colections as far as I know. 
+In this paper I will be specially using the NASM (Netwide Assembler, a portable 80x86 assembler) and it's instruction set when explaining whatever isnt operations, NASM will impact written syntax, so choose a assembler based on what you currently have when coding, for Windows we can use MASM, for Linux we can use the GAS (GNU Assembler) and for an selfhosted assembler you can use and read about FASM in its website [flat assembler](https://flatassembler.net/). As for the Linker, LD (The GNU linker) will be utilized, this linker should come with every distribution of the GNU Compilers Colections as far as I know. 
 
 To further understand the use of this tools check the section below.
 
@@ -30,11 +32,11 @@ Alongside NASM we will need the Intel Manual [found here](https://www.intel.com/
 
 Alongside the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be used, so choose what will be easier or more comfortable for you.
 
-## How does it do it?
+## Compiler Tool Chain
 
 When we write a simple program in C or Python to print to stdout, for example, the standard "Hello World", we usually only need to think about the size of the string (in C at least) or what function to call (in this case Python's print()), but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
 
-To put it bluntly, the compiler doesnt care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC for example will call a tool chain:
+To put it bluntly, the compiler doesnt care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC will call its tool chain:
 
 | Tool Chain  |     Phases               |   descriptions    |
 |-------------|--------------------------|-------------------|
@@ -55,21 +57,19 @@ Lets now dive into what is a Computer and how does a Computer behaves when it ha
 
 ## The computer
 
-Depending on the manufacturer that built the computer parts, we will need to use a different way to build our code and different tools to make it work, for example, there is no universal assembly code or any general way to create something in assembly solely because of the way our CPU is built, with its own set of instructions, rules and orders to follow before it does anything special.
-
-### Besides the CPU what elses composes our machine?
+Depending on the manufacturer that built the computer parts, we will need to use a different way to build our code and different tools to make it work, there is no universal method when creating any assembly code not in the uniqueness sense of the phrase but the but because how our CPU is built. Although the CPU may seem the most important part, it is only when working together with the other parts that we can use all of its potential.
 
 [section from geeksforgeeks website](https://www.geeksforgeeks.org/computer-organization-architecture/computer-and-its-components/)
 
-**1 - Input Unit:**
+### 1 - Input Unit:
 
-The input unit consists of input devices that are attached to the computer. These devices take input and convert it into binary language that the computer understands. Some of the common input devices are keyboard, mouse, joystick, scanner etc.
+The input unit consists of input devices that are attached to the computer. These devices take user input and convert it into binary language that the computer understands. Some of the common input devices are keyboard, mouse, joystick, scanner etc.
 
 	The Input Unit is formed by attaching one or more input devices to a computer.
 	A user input data and instructions through input devices such as a keyboard, mouse, etc.
 	The input unit is used to provide data to the processor for further processing.
 
-**2 - Central Processing Unit:**
+### 2 - Central Processing Unit:
 
 The *CPU (Central Processing Unit)* is the brain of the computer because it controls everything the computer does. When you enter information using an input device, the CPU processes it. First, it fetches instructions from memory, then decodes them to understand what needs to be done. If needed, it retrieves data from memory or an input device. After that, the CPU executes the task and either stores the result or displays it on an output device. The CPU has three main parts:
 
@@ -102,7 +102,7 @@ Apart from registers, the internal memory (also called primary memory or main me
 	It stores both data and instructions.
 	Data and instructions are stored permanently in this unit so that they are available whenever required.
 
-**3 - Output Unit:**
+### 3 - Output Unit:
 
 The output unit consists of output devices that are attached to the computer. It converts the binary data coming from the CPU to human understandable form. The common output devices are monitor, printer, plotter, etc.
 
