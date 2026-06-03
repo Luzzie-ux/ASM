@@ -1,4 +1,4 @@
-Section 2 — The CPU & Registers would be the immediate next chapter:
+Section 2 — The CPU & Registers would be the immediate next chapter: Play with the brain metaphor to the CPU
 
 The general-purpose registers (rax, rbx, rcx, rdx, rsi, rdi, rsp, rbp, r8–r15) and what each is conventionally used for
 
@@ -14,3 +14,7 @@ Memory & Addressing — how memory addresses work in x86_64, the difference betw
 
 NASM Program Structure — sections (.text, .data, .bss), global labels, the entry point
 Your first program — a Hello World in ASM, tying everything together
+
+TRANSISTORS
+BOOLEAN LOGIC
+	XOR AND OR NOT

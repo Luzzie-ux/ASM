@@ -1,20 +1,22 @@
-# ASSEMBLY - x86_64 
+# ASSEMBLY - x86_64
 
 ## Table of Contents
-
+0. [Foreword](#foreword)
 1. [Introduction to Assembly](#introduction-to-assembly)
-	1. [Foreword](#foreword)
-	2. [The Computer](#the-computer)
-	3. [Components](#components)
+	1. [The Computer](#the-computer)
+	2. [Components](#components)
 		1. [Input Unit](#1---input-unit)
 		2. [Central Processing Unit](#2---central-processing-unit)
 		3. [Output Unit](#3---output-unit)
 		4. [Binary](#binary)
-2. 
-
-# Introduction to Assembly
-
-In this README we will discuss about the Assembly Programming Language, namely the x86_64 or i386 Architecture, on how to read it, understand it and how to utilize it alongside almost anything. Since Assembly is the lowest level language before the actual machine code (i.e Binary), we need to understand: How does the Computer understand Assembly?
+	3. [The CPU](#the-cpu)
+		1. [Arithmetic & Logic](#arithmetic-and-logic)
+		2. [Control](#control)
+		3. [Memory](#memory)
+		4. [Functions](#functions)
+		5. [Types](#types)
+2. [NASM Structure](#nasm-structure)
+3. ["Hello World"](#hello-world)
 
 ## Foreword
 
@@ -32,11 +34,15 @@ Alongside NASM we will need the Intel Manual [found here](https://www.intel.com/
 
 Alongside the Reference Manual I will be also using VSCODE and the following extensions: ASM Code Lens by [maziac](https://github.com/maziac/asm-code-lens-issues) & x86 by [13xforever](https://github.com/13xforever/x86_64-assembly-vscode). Any Text editor or IDE can be used, so choose what will be easier or more comfortable for you.
 
+# Introduction to Assembly
+
+In this README we will discuss about the Assembly Programming Language, namely the x86_64 or i386 Architecture, on how to read it, understand it and how to utilize it alongside almost anything. Since Assembly is the lowest level language before the actual machine code (i.e Binary), we need to understand: How does the Computer understand Assembly? How does it interact with it? and What does he even do? In order to make these conections we need to get really close with the machine and learn its dark secrets, vengeful thoughts and it's little complex metal brain.
+
 ## The computer 
 
-When we write a simple program in C or Python to print to stdout, for example, the standard "Hello World", we usually only need to think about the size of the string (in C at least) or what function to call (in this case Python's print()), but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
+When we write a simple program in C to print to stdout, for example, the standard "Hello World", we usually only need to think about the size of the string or what library to include, but have you ever thought what actually happens behind the whole human code and what does the compiler actually do with it?
 
-To put it bluntly, the compiler doesn't care for what you wrote (in a semantical type of sense), once it gets a hold of the code, GCC will call its tool chain:
+To put it bluntly, the compiler doesn't care for what you wrote (in a semantical type of way), once it gets a hold of the code, GCC will call its tool chain:
 
 | Tool Chain  |     Phases               |   descriptions    |
 |-------------|--------------------------|-------------------|
@@ -49,7 +55,7 @@ To put it bluntly, the compiler doesn't care for what you wrote (in a semantical
 | Linking     |                   Linker | Last the LD will take the .o given to it from the AS and form an ELF executable (or shared object)|
 
 
-Most if not all the time the compiler will write a better asm code than us because it was built to do exactly that. It doesn't mean we can't learn how to use alongside our code. It's in fact important to understand how does the compiler do its job because we will be doing it, besides assembling and linking, from the Pre-Processing to Code Generation, that will be our Job now. 
+Most if not all the time the compiler will write a better ASM code than us because it was built to do exactly that. It doesn't mean we can't learn how to use alongside our own code. It's in fact important to understand how does the compiler do its job because we will be doing it, besides assembling and linking, from the Pre-Processing to Code Generation, that will be our Job. 
 
 Now what is missing is the answer to the question, "How does It do it?". Assembly itself can't be read by the computer and so with the help of NASM we can transform whatever we give it into binary. This Language should be interpreted as an instruction set than anything else, it is the native way we can access the core of a machine and give it direct orders. Metaphorically ASM is to humans what Binary is to computers, a dialect of some sorts.
 
@@ -138,7 +144,7 @@ and each bit has a arbitrarily given value too: (2^n)
 
 (With the growth of bit sizes from 8 to 16 and 16 to 32 and 32 to 64, the Most Significant Bit (MSB) keeps increasing, but that doesn't mean we stopped using lower formats, check [registers](#registers) to better understand.)
 
-The hexadecimal format takes from this to define how a digit will be written because of how many combinations from 0000 to 1111 we can make:
+The hexadecimal format takes from this given value in order to define how a digit will be written, adding each bit value until we reach a total bit cost of 15 (not counting zero since, it has no bit set off), and with this we have:
 
 |8|4|2|1| HEX |
 |-|-|-|-|-----|
@@ -160,3 +166,53 @@ The hexadecimal format takes from this to define how a digit will be written bec
 |1|1|1|1| -> F|
 
 Now with hex defined, we can write almost anything in an 8 bit length, making use of only 4 bits to write one digit and 1 byte to write two. 
+
+## The CPU
+
+[look here](https://www.geeksforgeeks.org/computer-science-fundamentals/central-processing-unit-cpu/)
+
+**WHAT DOES HE EVEN DO**
+
+Although briefly explained in the former section of components, the CPU itself is much more complex by nature than the other parts, it is no wonder that it get's called the "Brain" of computers. 
+
+### Arithmetic and Logic
+
+#### Arithmetic
+
+#### Logic Tasks
+
+### Control
+
+#### Clock
+
+#### Latch
+
+#### Reset
+
+### Memory
+
+#### Registers
+
+#### Cache Memory
+
+#### Addresses
+
+### Functions
+
+#### Fetch
+
+#### Decode
+
+#### Execute
+
+#### Store
+
+### Types
+
+#### Cores
+
+#### Processors
+
+# NASM Structure
+
+# "Hello World"
