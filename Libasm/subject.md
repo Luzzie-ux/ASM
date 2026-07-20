@@ -25,9 +25,13 @@ Comments are made by using the semicolon ';' the assembler will ignore it
 
 ## Exercise 1
 
-Now with everything started, lets make a few functions
+Now with everything started, lets make a few tweaks to the original program
 
 First, lets make a puts function that will receive a string called str
+Then an exit function that will receive the exit code 0
+from the start entry point we will call both of them, in the same order
+
+The allowed operations are: MOV, XOR, CALL, SYSCALL, DB, RET and LEA
 
 
 
