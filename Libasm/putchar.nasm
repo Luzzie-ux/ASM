@@ -19,7 +19,7 @@ ft_puts:
                         ; function start point
     push rbp            ; rbp - base pointer
     mov rbp, rsp        ; rsp - stack pointer
-    mov rax, 1          ; calling sys_write
+    mov rax, 1          ; requesting sys_write
     syscall             ; sys_write with rsi
     pop rbp             ; popping rbp
     ret                 ; Return: None
@@ -29,7 +29,7 @@ exit:
                         ; set up argument for exit function
     xor rdi, rdi        ; rdi - Exit code
                         ; function start
-    mov rax, 60         ; calling sys_exit
+    mov rax, 60         ; requesting sys_exit
     syscall             ; Sys_exit with rdi value
 
 section .data
