@@ -14,8 +14,9 @@ Labels, Instructions and Operands:
 
 |          | Labels | Instructions | Operands |
 |----------|--------|--------------|----------|
+|Sections  |        |    section   |  .text   |
 |Directives|        |    global    |  _start  |
-| Sections |        |    section   |  .text   |
+|          |        |              |          |
 |          | _start:|    .......   |  ......  |
 |	       |		|    section   |  .data   |
 |          |message:|    .......   |  ......  |
@@ -23,6 +24,13 @@ Labels, Instructions and Operands:
 Comments are made by using the semicolon ';' the assembler will ignore it
 
 ## Exercise 1
+
+Now with everything started, lets make a few functions
+
+First, lets make a puts function that will receive a string called str
+
+
+
 
 ## Exercise 2
 
