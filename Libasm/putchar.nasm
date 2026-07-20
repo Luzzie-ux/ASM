@@ -17,11 +17,8 @@ ft_puts:
     lea rsi, [rel str]  ; rsi - Pointer to the str we will print
     mov rdx, str_size   ; rdx - Length of the string
                         ; function start point
-    push rbp            ; rbp - base pointer
-    mov rbp, rsp        ; rsp - stack pointer
     mov rax, 1          ; requesting sys_write
-    syscall             ; sys_write with rsi
-    pop rbp             ; popping rbp
+    syscall             ; sys_write with rsi value
     ret                 ; Return: None
 
 ; Exit function:
@@ -30,7 +27,7 @@ exit:
     xor rdi, rdi        ; rdi - Exit code
                         ; function start
     mov rax, 60         ; requesting sys_exit
-    syscall             ; Sys_exit with rdi value
+    syscall             ; sys_exit with rdi value
 
 section .data
 
