@@ -4,7 +4,7 @@
 
 section .text
 
-global  _start
+    global  _start
 
 _start:
     call ft_puts
