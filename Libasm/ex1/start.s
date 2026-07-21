@@ -2,9 +2,14 @@
 ; Hello world program:
 ; -----------------
 
-section .text
+global  _start
 
-    global  _start
+section .data
+
+str: db "Hello, World!", 10     ; or 0xA
+str_size equ $ - str
+
+section .text
 
 _start:
                         ; _START POINT  
@@ -32,8 +37,3 @@ exit:
                         ; function start point
     mov rax, 60         ; requesting sys_exit
     syscall             ; sys_exit with rdi value
-
-section .data
-
-str: db "Hello, World!", 10     ; or 0xA
-str_size equ $ - str
