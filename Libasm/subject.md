@@ -33,10 +33,18 @@ from the start entry point we will call both of them, in the same order
 
 The allowed operations are: MOV, XOR, CALL, SYSCALL, DB, RET and LEA
 
-
-
-
 ## Exercise 2
+
+With the bit of knowledge we have, shall we make a standalone write function?
+
+For that we will need the same ideas we had before but now, we cant just be
+loading variables directly into .data, the write function should:
+
+Receive any string independtly of its variable name, count its size by itself
+the file descriptor should be decided before hand, and should print whatever
+was passed into it, to the proper place.
+
+
 
 ## Exercise 3
 
