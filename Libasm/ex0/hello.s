@@ -9,7 +9,7 @@
 
             section     .data
 message:    db          "Hello, World!", 10 ; note the newline at the end
-            size        equ $ - msg
+            size        equ $ - message
 
             section     .text
 _start:     
