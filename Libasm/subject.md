@@ -89,10 +89,13 @@ The allowed functions are: printf
 
 In order to utilize the functions from C we need gcc instead of ld:
 
-````bash
+```bash
 nasm -felf64 math.s
 gcc -no-pie math.o -o math
 ./math
 ```
 
 ## Exercise 4
+
+When it's not 0, then its definally 1. Or is it?
+
