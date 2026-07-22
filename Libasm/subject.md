@@ -97,5 +97,31 @@ gcc -no-pie math.o -o math
 
 ## Exercise 4
 
-When it's not 0, then its definally 1. Or is it?
+*When it's not 0, then its definally 1. Or is it?*
 
+After learning how to incremement and decrement, how about we do another mix of ASM and C.
+Let's recreate a C brand function called `strlen`. Make a file named after it with the prefix `ft_` and extension `.s`.
+And a second file called `main.c` that will print the number returned by your ft_strlen.
+
+The allowed operations are: MOV, INC, CMP, JMP, CALL, LEA, JX and SYSCALL  
+The allowed functions are: printf  
+
+The JX Instruction is actually an abbreviation to Jump IF X, where X is a condition:
+|I| Mnemonic  |I| Description          |I|  Flags |I| Mnemonic |I| Description            |I|   Flags |I|
+|-|-----------|-|----------------------|-|--------|-|----------|-|------------------------|-|---------|-|
+|I| JE        |I| Jump if Equal        |I| ZF = 1 |I| JS       |I| Jump if Signed         |I|  SF = 1 |I|
+|I| JNE       |I| Jump if NOT Equal    |I| ZF = 0 |I| JNS      |I| Jump if NOT Signed     |I|  SF = 0 |I|
+|I|  JZ       |I| Jump if Zero         |I| ZF = 1 |I| JP       |I| Jump if Parity         |I|  PF = 1 |I|
+|I|  JNZ      |I| Jump if NOT Zero     |I| ZF = 0 |I| JNP      |I| Jump if NOT Parity     |I|  PF = 0 |I|
+|I|  JC       |I| Jump if Carry        |I| CF = 1 |I| JPE      |I| Jump if Parity is Even |I|  PF = 1 |I|
+|I|  JNC      |I| Jump if NOT Carry    |I| CF = 0 |I| JPO      |I| Jump if Parity is Odd  |I|  PF = 0 |I|
+|I|  JO       |I| Jump if Overflow     |I| OF = 1 |I|          |I|                        |I|         |I|
+|I|  JNO      |I| Jump if NOT Overflow |I| OF = 0 |I|          |I|                        |I|         |I|
+
+
+|I| |I|
+|-|-|-|
+
+You should already know how to assemble and compile this
+
+## Exercise 5
