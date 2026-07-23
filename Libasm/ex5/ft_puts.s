@@ -20,6 +20,7 @@ ft_puts:
     call ft_write
 
     .return:
+        mov rax, rdx
         ret
 
     ft_strlen:
@@ -32,7 +33,6 @@ ft_puts:
             inc rax
             jmp .loop
         .done:
-            mov rax, rdx
             ret
 
     ft_write:
