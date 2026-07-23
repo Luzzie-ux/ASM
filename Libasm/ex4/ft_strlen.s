@@ -6,7 +6,7 @@ global ft_strlen
 
 section .text
 
-; long ft_strlen(const char *s)
+; long ft_strlen(const char *s);
 ; Counts how many characters composes a null terminated string.
 ; If a void ptr is passed, it will return 0
 ft_strlen:
