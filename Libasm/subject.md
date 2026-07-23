@@ -84,7 +84,26 @@ This is a great time to understand borrowing functions from the C library until 
 Another clue, instead of _start, this time lets use global main, so we can save ourselves the trouble
 of dealing with the stack.
 
-The allowed Operations are: MOV, ADD, SUB, INC, DEC, IMUL, IDIV, CALL, POP, PUSH and XOR  
+```asm
+; and for printf use this so you dont need to code it yourseld
+; the content of the message is yours to change, mess around
+
+section	.data
+	formatStr: db "Integer is: %d", 10, 0
+
+ft_printf:
+    push rbp
+    mov rbp, rsp
+    mov rdi, formatStr
+    mov rsi, rax
+    xor rax, rax
+    call printf
+    pop rbp
+    ret
+
+```
+
+The allowed Operations are: MOV, ADD, SUB, INC, DEC, MUL, DIV, CALL, and XOR
 The allowed functions are: printf
 
 In order to utilize the functions from C we need gcc instead of ld:
@@ -158,4 +177,41 @@ You should already know how to assemble and compile this
 
 ## Exercise 5
 
-With conditional comparisons, loops, movs and registers we have mastered the basics of what assembly has to offer, 
+With conditional comparisons, loops, movs and registers we have mastered the basics of what assembly has to offer, so lets make a final function combining everything we have learning, think of it as a improvement to write that gives back to you how many characters it wrote out.
+
+```c
+// write in a comment its declaration:
+// int ft_puts(const char *s)
+
+// here is a common definition of ft_puts in C:
+#include <unistd.h>
+
+int ft_puts(const char *s)
+{
+	int i = 0;
+	if (s == NULL)
+		return (i);
+	while (s[i])
+	{
+		write(1, s[i], 1);
+		i++;
+	}
+	return (i);
+}
+```
+
+You are allowed to use anything that you have coded before, and it is advised that you do so.  
+You are not allowed however, to use C functions or write code in C.
+
+Make 2 files, one named `ft_puts.s` and the other `start.s` so that you can test your function before being done with it.
+
+Any instruction is allowed as long as you have used it before, so unleash your creativity!
+
+```bash
+# to assemble and execute it, do:
+nasm -f elf64 start.s ft_puts.s
+ld start.o ft_puts.o -o start
+./start
+```
+
+> A little tip, your ft_strlen is your friend here
