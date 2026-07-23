@@ -107,21 +107,55 @@ The allowed operations are: MOV, INC, CMP, JMP, CALL, LEA, JX and SYSCALL
 The allowed functions are: printf  
 
 The JX Instruction is actually an abbreviation to Jump IF X, where X is a condition:
-|I| Mnemonic  |I| Description          |I|  Flags |I| Mnemonic |I| Description            |I|   Flags |I|
-|-|-----------|-|----------------------|-|--------|-|----------|-|------------------------|-|---------|-|
-|I| JE        |I| Jump if Equal        |I| ZF = 1 |I| JS       |I| Jump if Signed         |I|  SF = 1 |I|
-|I| JNE       |I| Jump if NOT Equal    |I| ZF = 0 |I| JNS      |I| Jump if NOT Signed     |I|  SF = 0 |I|
-|I|  JZ       |I| Jump if Zero         |I| ZF = 1 |I| JP       |I| Jump if Parity         |I|  PF = 1 |I|
-|I|  JNZ      |I| Jump if NOT Zero     |I| ZF = 0 |I| JNP      |I| Jump if NOT Parity     |I|  PF = 0 |I|
-|I|  JC       |I| Jump if Carry        |I| CF = 1 |I| JPE      |I| Jump if Parity is Even |I|  PF = 1 |I|
-|I|  JNC      |I| Jump if NOT Carry    |I| CF = 0 |I| JPO      |I| Jump if Parity is Odd  |I|  PF = 0 |I|
-|I|  JO       |I| Jump if Overflow     |I| OF = 1 |I|          |I|                        |I|         |I|
-|I|  JNO      |I| Jump if NOT Overflow |I| OF = 0 |I|          |I|                        |I|         |I|
+|I| Mnemonic  |I| Description          |I|  Flags |I| Mnemonic |I| Description            |I|  Flags |I|
+|-|-----------|-|----------------------|-|--------|-|----------|-|------------------------|-|--------|-|
+|I|  JE       |I| Jump if Equal        |I| ZF = 1 |I| JS       |I| Jump if Signed         |I| SF = 1 |I|
+|I|  JNE      |I| Jump if NOT Equal    |I| ZF = 0 |I| JNS      |I| Jump if NOT Signed     |I| SF = 0 |I|
+|I|  JZ       |I| Jump if Zero         |I| ZF = 1 |I| JP       |I| Jump if Parity         |I| PF = 1 |I|
+|I|  JNZ      |I| Jump if NOT Zero     |I| ZF = 0 |I| JNP      |I| Jump if NOT Parity     |I| PF = 0 |I|
+|I|  JC       |I| Jump if Carry        |I| CF = 1 |I| JPE      |I| Jump if Parity is Even |I| PF = 1 |I|
+|I|  JNC      |I| Jump if NOT Carry    |I| CF = 0 |I| JPO      |I| Jump if Parity is Odd  |I| PF = 0 |I|
+|I|  JO       |I| Jump if Overflow     |I| OF = 1 |I|          |I|                        |I|        |I|
+|I|  JNO      |I| Jump if NOT Overflow |I| OF = 0 |I|          |I|                        |I|        |I|
 
+The following table shows a list of signed jumps based on comparisons of signed operands:
 
-|I| |I|
-|-|-|-|
+|I| Mnemonic  |I| Description          |I|  Flags  |I|
+|-|-----------|-|----------------------|-|---------|-|
+|I|  JG       |I| Jump if Greater      |I| ZF = 0  |I|
+|I|  JGE      |I| Jump if G or Equal   |I| SF = OF |I|
+|I|  JNG      |I| Jump if NOT Greater  |I| ZF = 1  |I|
+|I|  JNGE     |I| Jump if NOT G or E   |I| SF ≠ OF |I|
+|I|  JL       |I| Jump if Less         |I| SF ≠ OF |I|
+|I|  JLE      |I| Jump if L or Equal   |I| SF = OF |I|
+|I|  JNL      |I| Jump if NOT Less     |I| SF = OF |I|
+|I|  JNLE     |I| Jump if NOT L or E   |I| ZF = 1  |I|
+
+The following table shows a list of signed jumps based on comparisons of unsigned operands:
+
+|I| Mnemonic  |I| Description          |I|  Flags |I|
+|-|-----------|-|----------------------|-|--------|-|
+|I|  JA       |I| Jump if Above        |I| ZF = 0 |I|
+|I|  JAE      |I| Jump if A or Equal   |I| CF = 0 |I|
+|I|  JNA      |I| Jump if NOT Above    |I| ZF = 1 |I|
+|I|  JNAE     |I| Jump if NOT A or E   |I| CF = 1 |I|
+|I|  JB       |I| Jump if Below        |I| CF = 1 |I|
+|I|  JBE      |I| Jump if B or Equal   |I| ZF = 1 |I|
+|I|  JNB      |I| Jump if NOT Below    |I| CF = 0 |I|
+|I|  JNBE     |I| Jump if NOT B or E   |I| CF = 0 |I|
+
+The follow table shows the jumps based on the value of CX and ECX:
+
+|I| Mnemonic |I| Description     |I|
+|-|----------|-|-----------------|-|
+|I| JCXZ     |-| Jump if CX = 0  |I|
+|I| JECXZ    |-| Jump if ECX = 0 |I|
+
+All conditional jumps except these last two (JCXZ & JECXZ) use the processor flags for their criteria.
+Thus, any statement that sets or clears a flag can serve as a test basis for a conditional jump. The jump statement can be any one of 30 conditional-jump instructions
 
 You should already know how to assemble and compile this
 
 ## Exercise 5
+
+With conditional comparisons, loops, movs and registers we have mastered the basics of what assembly has to offer, 
